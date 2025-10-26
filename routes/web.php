@@ -25,4 +25,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('two-factor.show');
     });
 
+
+    // Routes d'administration des utilisateurs
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::middleware('can:view invitations')->group(function () {
+            Volt::route('users', 'admin.users.index')->name('users.index');
+            Volt::route('users/invitations', 'admin.users.invitations')->name('users.invitations');
+        });
+        
+        Volt::route('roles', 'admin.roles.index')
+            ->middleware('can:view roles')
+            ->name('roles.index');
+    });
+
 });

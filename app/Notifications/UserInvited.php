@@ -22,11 +22,19 @@ class UserInvited extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $url = route('register', ['token' => $this->invitation->token]);
+        
+        $roles = $this->invitation->roles 
+            ? implode(', ', $this->invitation->roles) 
+            : 'Utilisateur';
 
         return (new MailMessage)
-            ->subject('You are invited to join!')
-            ->line('You have been invited to create an account.')
-            ->action('Create Account', $url)
-            ->line('This invitation link will expire in 7 days.');
+            ->subject('Vous êtes invité à rejoindre ' . config('app.name'))
+            ->greeting('Bonjour,')
+            ->line('Vous avez été invité à créer un compte sur ' . config('app.name') . '.')
+            ->line('Rôle(s) assigné(s) : **' . $roles . '**')
+            ->action('Créer mon compte', $url)
+            ->line('Ce lien d\'invitation expirera dans 7 jours.')
+            //->line('Si vous n\'avez pas demandé cette invitation, vous pouvez ignorer ce message.')
+            ->salutation('Cordialement, L\'équipe ' . config('app.name'));
     }
 }

@@ -48,8 +48,7 @@ new class extends Component {
         Notification::route('mail', $invitation->email)
             ->notify(new UserInvited($invitation));
 
-        $this->dispatch(
-            'notification',
+        $this->dispatch('notification',
             type: 'success',
             message: 'Invitation envoyée avec succès à ' . $invitation->email
         );
@@ -77,8 +76,14 @@ new class extends Component {
             </flux:subheading>
         </div>
 
-        <flux:input wire:model="email" label="Adresse email" type="email" placeholder="utilisateur@exemple.com" required
-            icon="envelope" />
+        <flux:input
+            wire:model="email"
+            label="Adresse email"
+            type="email"
+            placeholder="utilisateur@exemple.com"
+            required
+            icon="envelope"
+        />
 
         @if ($roles->isNotEmpty())
             <div class="space-y-2">
@@ -86,10 +91,14 @@ new class extends Component {
                 <flux:text variant="subtle" class="text-xs mb-2">
                     {{ __('Sélectionnez un ou plusieurs rôles à assigner à cet utilisateur') }}
                 </flux:text>
-
+                
                 <div class="space-y-2 max-h-48 overflow-y-auto p-3 border rounded-lg border-zinc-200 dark:border-zinc-700">
                     @foreach ($roles as $role)
-                        <flux:checkbox wire:model="selectedRoles" value="{{ $role->name }}" label="{{ $role->name }}" />
+                        <flux:checkbox 
+                            wire:model="selectedRoles"
+                            value="{{ $role->name }}"
+                            label="{{ $role->name }}"
+                        />
                     @endforeach
                 </div>
             </div>

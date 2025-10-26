@@ -29,4 +29,12 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Volt::route('/users/invitations', 'admin.users.invitations.index')
+            ->name('invitations')
+            ->can('send invitations');
+    });
+
+    Volt::route('register/{token}', 'auth.register')->name('register.token');
 });

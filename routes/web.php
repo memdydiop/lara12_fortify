@@ -4,23 +4,17 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Volt::route('','dashboard')->name('dashboard');
 
-    Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
-    Volt::route('settings/password', 'settings.password')->name('user-password.edit');
-    Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
-
-    Volt::route('settings/two-factor', 'settings.two-factor')
-        ->middleware(
+    Route::prefix('settings')->group(function () {      
+        Route::redirect('', 'settings/profile');
+        Volt::route('profile','settings.profile')->name('profile.edit');
+        Volt::route('password','settings.password')->name('user-password.edit');
+        Volt::route('appearance','settings.appearance')->name('appearance.edit');
+        Volt::route('two-factor','settings.two-factor')->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()
                     && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
@@ -29,12 +23,6 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
-
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Volt::route('/users/invitations', 'admin.users.invitations.index')
-            ->name('invitations')
-            ->can('send invitations');
     });
 
-    Volt::route('register/{token}', 'auth.register')->name('register.token');
 });

@@ -13,7 +13,7 @@ $classes = Flux::classes()
     ;
 
 $textClasses = Flux::classes()
-    ->add('text-sm font-medium truncate [:where(&)]:text-zinc-800 dark:[:where(&)]:text-zinc-100')
+    ->add('text-sm font-medium truncate [:where(&)]:text-zinc-800')
     ;
 @endphp
 

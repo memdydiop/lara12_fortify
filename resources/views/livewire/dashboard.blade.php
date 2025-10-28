@@ -81,7 +81,7 @@ new class extends Component {
     <div class="flex gap-4 mb-6">
         @foreach ($this->stats as $stat)
             <div
-                class="relative flex-1 rounded px-6 py-4 bg-zinc-50 dark:bg-zinc-700 {{ $loop->iteration > 1 ? 'max-md:hidden' : '' }}  {{ $loop->iteration > 3 ? 'max-lg:hidden' : '' }}">
+                class="relative flex-1 rounded px-6 py-4 bg-white shadow {{ $loop->iteration > 1 ? 'max-md:hidden' : '' }}  {{ $loop->iteration > 3 ? 'max-lg:hidden' : '' }}">
                 <flux:subheading>{{ $stat['title'] }}</flux:subheading>
                 <flux:heading size="xl" class="mb-2">{{ $stat['value'] }}</flux:heading>
                 <div

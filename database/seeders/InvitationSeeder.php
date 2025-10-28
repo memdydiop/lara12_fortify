@@ -12,7 +12,7 @@ class InvitationSeeder extends Seeder
     public function run(): void
     {
         // Créer des rôles de test si ils n'existent pas
-        $roles = ['admin', 'manager', 'user'];
+        $roles = ['Ghost', 'Admin', 'User'];
         
         foreach ($roles as $roleName) {
             Role::firstOrCreate(['name' => $roleName, 'guard_name' => 'web']);
@@ -25,6 +25,7 @@ class InvitationSeeder extends Seeder
         Invitation::factory()
             ->count(5)
             ->pending()
+            //->withRole('User')
             ->state(['invited_by' => $inviter->id])
             ->create();
 
@@ -32,7 +33,7 @@ class InvitationSeeder extends Seeder
         Invitation::factory()
             ->count(3)
             ->pending()
-            ->withRoles(['manager'])
+            //->withRole('Admin')
             ->state(['invited_by' => $inviter->id])
             ->create();
 
@@ -40,7 +41,7 @@ class InvitationSeeder extends Seeder
         Invitation::factory()
             ->count(4)
             ->registered()
-            ->withRoles(['user'])
+            //->withRole('User')
             ->state(['invited_by' => $inviter->id])
             ->create();
 
@@ -48,6 +49,7 @@ class InvitationSeeder extends Seeder
         Invitation::factory()
             ->count(2)
             ->expired()
+            //->withRole('User')
             ->state(['invited_by' => $inviter->id])
             ->create();
     }

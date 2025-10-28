@@ -14,14 +14,13 @@ class Invitation extends Model
     protected $fillable = [
         'email',
         'token',
-        'roles',
+        'role',  // Singulier : un seul rôle
         'registered_at',
         'expires_at',
         'invited_by',
     ];
 
     protected $casts = [
-        'roles' => 'array',
         'registered_at' => 'datetime',
         'expires_at' => 'datetime',
     ];
@@ -63,7 +62,8 @@ class Invitation extends Model
 
     public function scopeExpired($query)
     {
-        return $query->where('expires_at', '<', now());
+        return $query->where('expires_at', '<', now())
+            ->whereNull('registered_at');
     }
 
     public function scopePending($query)

@@ -6,14 +6,14 @@
 
 @php
 $classes = Flux::classes()
-    ->add('min-w-0') // This is here to allow nested input elements like flux::input.file to truncate properly...
+    ->add('min-w-0 !gap-y-0') // This is here to allow nested input elements like flux::input.file to truncate properly...
     ->add('[&:not(:has([data-flux-field])):has([data-flux-control][disabled])>[data-flux-label]]:opacity-50') // Dim labels for fields with no nested fields when a control is disabled...
     ->add('[&:has(>[data-flux-radio-group][disabled])>[data-flux-label]]:opacity-50') // Special case for radio groups because they are nested fields...
     ->add('[&:has(>[data-flux-checkbox-group][disabled])>[data-flux-label]]:opacity-50') // Special case for checkbox groups because they are nested fields...
     ->add(match ($variant) {
         default => 'block',
         'inline' => [
-            'grid gap-x-3 gap-y-1.5',
+            'grid gap-x-3 gap-y-0',
             'has-[[data-flux-label]~[data-flux-control]]:grid-cols-[1fr_auto]',
             'has-[[data-flux-control]~[data-flux-label]]:grid-cols-[auto_1fr]',
             '[&>[data-flux-control]~[data-flux-description]]:row-start-2 [&>[data-flux-control]~[data-flux-description]]:col-start-2',
@@ -23,14 +23,14 @@ $classes = Flux::classes()
     })
     ->add(match ($variant) {
         default => [ // Adjust spacing around label...
-            '*:data-flux-label:mb-3 [&>[data-flux-label]:has(+[data-flux-description])]:mb-2',
+            '*:data-flux-label:mb-0 [&>[data-flux-label]:has(+[data-flux-description])]:mb-0',
         ],
         'inline' => '',
     })
     ->add(match ($variant) {
         default => [ // Adjust spacing around description...
             '[&>[data-flux-label]+[data-flux-description]]:mt-0',
-            '[&>[data-flux-label]+[data-flux-description]]:mb-3',
+            '[&>[data-flux-label]+[data-flux-description]]:mb-0',
             '[&>*:not([data-flux-label])+[data-flux-description]]:mt-3',
         ],
         'inline' => '',

@@ -14,7 +14,7 @@ class InvitationPolicy
 
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create invitations');
+        return $user->hasPermissionTo('send invitations');
     }
 
     public function resend(User $user, Invitation $invitation): bool

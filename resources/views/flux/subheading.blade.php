@@ -12,7 +12,7 @@ $classes = Flux::classes()
         default => 'text-sm',
         'sm' => 'text-xs',
     })
-    ->add('[:where(&)]:text-zinc-500 [:where(&)]:dark:text-white/70')
+    ->add('[:where(&)]:text-zinc-500')
     ;
 @endphp
 

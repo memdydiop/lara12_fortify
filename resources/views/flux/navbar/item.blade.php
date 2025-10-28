@@ -26,7 +26,7 @@ $classes = Flux::classes()
     ->add('px-3 h-8 flex items-center rounded-lg')
     ->add('relative') // This is here for the "active" bar at the bottom to be positioned correctly...
     ->add($square ? '' : 'px-2.5!')
-    ->add('text-zinc-500 dark:text-white/80 ')
+    ->add('text-zinc-500')
     // Styles for when this link is the "current" one...
     ->add('data-current:after:absolute data-current:after:-bottom-3 data-current:after:inset-x-0 data-current:after:h-[2px]')
     ->add([
@@ -35,14 +35,14 @@ $classes = Flux::classes()
     ])
     ->add(match ($accent) {
         true => [
-            'hover:text-zinc-800 dark:hover:text-white',
-            'data-current:text-(--color-accent-content) hover:data-current:text-(--color-accent-content) hover:bg-zinc-800/5 dark:hover:bg-white/10 hover:data-current:bg-(--hover-fill)',
+            'hover:text-zinc-800',
+            'data-current:text-(--color-accent-content) hover:data-current:text-(--color-accent-content) hover:bg-zinc-800/5 hover:data-current:bg-(--hover-fill)',
             'data-current:after:bg-(--color-accent-content)',
         ],
         false => [
-            'hover:text-zinc-800 dark:hover:text-white',
-            'data-current:text-zinc-800 dark:data-current:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-white/10',
-            'data-current:after:bg-zinc-800 dark:data-current:after:bg-white',
+            'hover:text-zinc-800',
+            'data-current:text-zinc-800 hover:bg-zinc-100',
+            'data-current:after:bg-zinc-800',
         ],
     })
     ;
@@ -59,7 +59,7 @@ $classes = Flux::classes()
 
             <?php if ($iconDot): ?>
                 <div class="absolute top-[-2px] end-[-2px]">
-                    <div class="size-[6px] rounded-full bg-zinc-500 dark:bg-zinc-400"></div>
+                    <div class="size-[6px] rounded-full bg-zinc-500"></div>
                 </div>
             <?php endif; ?>
         </div>

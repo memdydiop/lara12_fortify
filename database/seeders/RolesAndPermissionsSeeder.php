@@ -5,86 +5,100 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
-    public function run(): void
+    /**
+     * Retourne la liste de toutes les permissions de l'application.
+     * C'est la "Source de Vérité". Pour ajouter une permission,
+     * il suffit de l'ajouter à ce tableau.
+     */
+    public function getPermissions(): array
     {
-        // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-
-        // Créer les permissions
-        $permissions = [
-            // Permissions invitations
-            'view invitations',
-            'create invitations',
-            'resend invitations',
-            'delete invitations',
-            
-            // Permissions utilisateurs
+        return [
+            // Gestion des Utilisateurs
             'view users',
             'create users',
             'edit users',
             'delete users',
-            
-            // Permissions rôles
+            'export users',
+            'edit user roles',
+
+            'view invitations',
+            'send invitations',
+            'resend invitations',
+            'delete invitations',
+
+            'view administration',
+
+            // Gestion des Rôles & Permissions
             'view roles',
             'create roles',
             'edit roles',
             'delete roles',
-        ];
 
+            'view permissions',
+            'assign permissions',
+
+            'view profiles',
+            'edit profiles',
+            'delete profiles',
+
+            'view settings',
+            'edit settings',
+
+            'view reports',
+            'export reports',
+
+            // --- AJOUTEZ VOS NOUVELLES PERMISSIONS CI-DESSOUS ---
+
+            // Gestion des Clients
+            'view clients',
+            'create clients',
+            'edit clients',
+            'delete clients',
+
+            'view patisseries', 'create patisseries', 'edit patisseries', 'delete patisseries',
+            'view clients', 'create clients', 'edit clients', 'delete clients',
+
+            'view clients',
+            'create clients',
+            'edit clients',
+            'delete clients',
+
+            'view ingredients_categories',
+            'create ingredients_categories',
+            'edit ingredients_categories',
+            'delete ingredients_categories',
+            'view ingredients',
+            'create ingredients',
+            'edit ingredients',
+            'delete ingredients',
+            'view fournisseurs',
+            'create fournisseurs',
+            'edit fournisseurs',
+            'delete fournisseurs',
+            // ...
+        ];
+    }
+
+    /**
+     * Exécute les seeds de la base de données.
+     */
+    public function run(): void
+    {
+        // Réinitialise le cache des rôles et permissions
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // --- 1. Création des Permissions ---
+        $permissions = $this->getPermissions();
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(
-                ['name' => $permission],
-                ['guard_name' => 'web']
-            );
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Créer les rôles et assigner les permissions
-
-        // Super Admin - toutes les permissions
-        $superAdmin = Role::firstOrCreate(
-            ['name' => 'super-admin'],
-            ['guard_name' => 'web']
-        );
-        $superAdmin->givePermissionTo(Permission::all());
-
-        // Admin - gestion complète sauf super-admin
-        $admin = Role::firstOrCreate(
-            ['name' => 'admin'],
-            ['guard_name' => 'web']
-        );
-        $admin->givePermissionTo([
-            'view invitations',
-            'create invitations',
-            'resend invitations',
-            'delete invitations',
-            'view users',
-            'create users',
-            'edit users',
-            'delete users',
-            'view roles',
-        ]);
-
-        // Manager - gestion limitée
-        $manager = Role::firstOrCreate(
-            ['name' => 'manager'],
-            ['guard_name' => 'web']
-        );
-        $manager->givePermissionTo([
-            'view invitations',
-            'create invitations',
-            'resend invitations',
-            'view users',
-        ]);
-
-        // User - utilisateur standard (pas de permissions spéciales)
-        Role::firstOrCreate(
-            ['name' => 'user'],
-            ['guard_name' => 'web']
-        );
-
-        $this->command->info('Rôles et permissions créés avec succès!');
+        // --- 2. Création des Rôles ---
+        $ghostRole = Role::firstOrCreate(['name' => 'Ghost']);
+        
     }
 }

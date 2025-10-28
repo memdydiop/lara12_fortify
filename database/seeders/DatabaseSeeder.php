@@ -15,9 +15,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        // 1. Créer les permissions et rôles
+        $this->call(RolesAndPermissionsSeeder::class);
+
+        
+
         User::factory()->create([
             'name' => 'Ghost User',
             'email' => 'ghost@user.com',
-        ]);
+        ])->assignRole('Ghost');
     }
 }

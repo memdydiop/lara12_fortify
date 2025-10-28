@@ -2,8 +2,8 @@
 
 @php
 $classes = Flux::classes()
-    ->add('shrink-0 size-[1.125rem] rounded-[.3rem] flex justify-center items-center')
-    ->add('text-sm text-zinc-700 dark:text-zinc-800')
+    ->add('shrink-0 size-3.5 rounded-[.15rem] flex justify-center items-center')
+    ->add('text-sm text-zinc-700')
     ->add('shadow-xs [ui-checkbox[disabled]_&]:opacity-75 [ui-checkbox[data-checked][disabled]_&]:opacity-50 [ui-checkbox[disabled]_&]:shadow-none [ui-checkbox[data-checked]_&]:shadow-none [ui-checkbox[data-indeterminate]_&]:shadow-none')
     ->add('[ui-checkbox[data-checked]:not([data-indeterminate])_&>svg:first-child]:block [ui-checkbox[data-indeterminate]_&>svg:last-child]:block')
     ->add([

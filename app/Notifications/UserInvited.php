@@ -1,5 +1,5 @@
 <?php
-
+// [file name]: UserInvited.php
 namespace App\Notifications;
 
 use App\Models\Invitation;
@@ -14,27 +14,23 @@ class UserInvited extends Notification implements ShouldQueue
 
     public function __construct(public Invitation $invitation) {}
 
-    public function via(object $notifiable): array
+    public function via($notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable): MailMessage
     {
+        // Le token utilisé est automatiquement le nouveau token régénéré
         $url = route('register', ['token' => $this->invitation->token]);
-        
-        $roles = $this->invitation->roles 
-            ? implode(', ', $this->invitation->roles) 
-            : 'Utilisateur';
 
         return (new MailMessage)
-            ->subject('Vous êtes invité à rejoindre ' . config('app.name'))
-            ->greeting('Bonjour,')
-            ->line('Vous avez été invité à créer un compte sur ' . config('app.name') . '.')
-            ->line('Rôle(s) assigné(s) : **' . $roles . '**')
-            ->action('Créer mon compte', $url)
-            ->line('Ce lien d\'invitation expirera dans 7 jours.')
-            //->line('Si vous n\'avez pas demandé cette invitation, vous pouvez ignorer ce message.')
-            ->salutation('Cordialement, L\'équipe ' . config('app.name'));
+            ->subject('Invitation à rejoindre ' . config('app.name'))
+            ->line('Vous avez été invité à rejoindre ' . config('app.name'))
+            ->line('Rôle : ' . $this->invitation->role)
+            ->action('Accepter l\'invitation', $url)
+            ->line('Cette invitation expirera le : ' . $this->invitation->expires_at->format('d/m/Y à H:i'))
+            ->line('Si vous ne souhaitez pas créer de compte, aucune action n\'est requise.');
     }
 }
+?>

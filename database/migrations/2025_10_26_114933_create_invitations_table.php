@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('token')->unique();
-            $table->json('roles')->nullable();
+            $table->string('role')->default('User');
             $table->timestamp('registered_at')->nullable();
             $table->timestamp('expires_at');
             $table->foreignId('invited_by')->constrained('users')->onDelete('cascade');

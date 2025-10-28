@@ -34,12 +34,12 @@ $classes = Flux::classes()
     ->add('text-start text-sm font-medium')
     ->add(match ($variant) {
         'danger' => [
-            'text-zinc-800 hover:text-red-600 hover:bg-red-50 dark:text-white dark:hover:bg-red-400/20 dark:hover:text-red-400',
-            '**:data-navmenu-icon:text-zinc-400 dark:**:data-navmenu-icon:text-white/60 [&:hover_[data-navmenu-icon]]:text-current',
+            'text-zinc-800 hover:text-red-600 hover:bg-red-50',
+            '**:data-navmenu-icon:text-zinc-400 [&:hover_[data-navmenu-icon]]:text-current',
         ],
         'default' => [
-            'text-zinc-800 hover:bg-zinc-50 dark:text-white dark:hover:bg-zinc-600',
-            '**:data-navmenu-icon:text-zinc-400 dark:**:data-navmenu-icon:text-white/60 [&:hover_[data-navmenu-icon]]:text-current',
+            'text-zinc-800 hover:bg-zinc-50',
+            '**:data-navmenu-icon:text-zinc-400 [&:hover_[data-navmenu-icon]]:text-current',
         ]
     })
     ->add($disabled ? 'text-zinc-400' : '')

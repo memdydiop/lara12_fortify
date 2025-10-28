@@ -75,8 +75,8 @@ $classes = Flux::classes()
     })
     ->add('relative flex-none isolate flex items-center justify-center')
     ->add('[:where(&)]:font-medium')
-    ->add('rounded-[var(--avatar-radius)]')
-    ->add($hasTextContent ? '[:where(&)]:bg-zinc-200 [:where(&)]:dark:bg-zinc-600 [:where(&)]:text-zinc-800 [:where(&)]:dark:text-white' : '')
+    ->add('mask mask-squircle')
+    ->add($hasTextContent ? '[:where(&)]:bg-zinc-200 [:where(&)]:text-zinc-800' : '')
     ->add(match($color) {
         'red' => 'bg-red-200 text-red-800',
         'orange' => 'bg-orange-200 text-orange-800',
@@ -98,7 +98,7 @@ $classes = Flux::classes()
         default => '',
     })
     ->add(true ? [
-        'after:absolute after:inset-0 after:inset-ring-[1px] after:inset-ring-black/7 dark:after:inset-ring-white/10',
+        'after:absolute after:inset-0 after:inset-ring-[1px] after:inset-ring-black/7',
         $circle ? 'after:rounded-full' : match($size) {
             'xl' => 'after:rounded-xl',
             'lg' => 'after:rounded-lg',
@@ -123,17 +123,17 @@ $badgePosition = $attributes->pluck('badge:position') ?: (is_object($badge) ? $b
 $badgeVariant = $attributes->pluck('badge:variant') ?: (is_object($badge) ? $badge?->attributes?->pluck('variant') : null);
 
 $badgeClasses = Flux::classes()
-    ->add('absolute ring-[2px] ring-white dark:ring-zinc-900 z-10')
+    ->add('absolute ring-[2px] ring-white z-10')
     ->add(match($size) {
         default => 'h-3 min-w-3',
         'sm' => 'h-2 min-w-2',
         'xs' => 'h-2 min-w-2',
     })
     ->add('flex items-center justify-center tabular-nums overflow-hidden')
-    ->add('text-[.625rem] text-zinc-800 dark:text-white font-medium')
+    ->add('text-[.625rem] text-zinc-5 font-medium')
     ->add($badgeCircle ? 'rounded-full' : 'rounded-[3px]')
     ->add($badgeVariant === 'outline' ? [
-        'after:absolute after:inset-[3px] after:bg-white dark:after:bg-zinc-900',
+        'after:absolute after:inset-[3px] after:bg-white',
         $badgeCircle ? 'after:rounded-full' : 'after:rounded-[1px]',
     ] : [])
     ->add(match($badgePosition) {
@@ -144,26 +144,26 @@ $badgeClasses = Flux::classes()
         default => 'bottom-0 right-0',
     })
     ->add(match($badgeColor) {
-        'red' => 'bg-red-500 dark:bg-red-400',
-        'orange' => 'bg-orange-500 dark:bg-orange-400',
-        'amber' => 'bg-amber-500 dark:bg-amber-400',
-        'yellow' => 'bg-yellow-500 dark:bg-yellow-400',
-        'lime' => 'bg-lime-500 dark:bg-lime-400',
-        'green' => 'bg-green-500 dark:bg-green-400',
-        'emerald' => 'bg-emerald-500 dark:bg-emerald-400',
-        'teal' => 'bg-teal-500 dark:bg-teal-400',
-        'cyan' => 'bg-cyan-500 dark:bg-cyan-400',
-        'sky' => 'bg-sky-500 dark:bg-sky-400',
-        'blue' => 'bg-blue-500 dark:bg-blue-400',
-        'indigo' => 'bg-indigo-500 dark:bg-indigo-400',
-        'violet' => 'bg-violet-500 dark:bg-violet-400',
-        'purple' => 'bg-purple-500 dark:bg-purple-400',
-        'fuchsia' => 'bg-fuchsia-500 dark:bg-fuchsia-400',
-        'pink' => 'bg-pink-500 dark:bg-pink-400',
-        'rose' => 'bg-rose-500 dark:bg-rose-400',
-        'zinc' => 'bg-zinc-400 dark:bg-zinc-300',
-        'gray' => 'bg-zinc-400 dark:bg-zinc-300',
-        default => 'bg-white dark:bg-zinc-900',
+        'red' => 'bg-red-500',
+        'orange' => 'bg-orange-500',
+        'amber' => 'bg-amber-500',
+        'yellow' => 'bg-yellow-500',
+        'lime' => 'bg-lime-500',
+        'green' => 'bg-green-500',
+        'emerald' => 'bg-emerald-500',
+        'teal' => 'bg-teal-500',
+        'cyan' => 'bg-cyan-500',
+        'sky' => 'bg-sky-500',
+        'blue' => 'bg-blue-500',
+        'indigo' => 'bg-indigo-500',
+        'violet' => 'bg-violet-500',
+        'purple' => 'bg-purple-500',
+        'fuchsia' => 'bg-fuchsia-500',
+        'pink' => 'bg-pink-500',
+        'rose' => 'bg-rose-500',
+        'zinc' => 'bg-zinc-400',
+        'gray' => 'bg-zinc-400',
+        default => 'bg-white',
     })
     ;
 
@@ -173,11 +173,11 @@ $label = $alt ?? $name;
 <flux:with-tooltip :$tooltip :$attributes>
     <flux:button-or-link :attributes="$attributes->class($classes)->merge($circle ? ['data-circle' => 'true'] : [])" :$as :$href data-flux-avatar data-slot="avatar" data-size="{{ $size }}">
         <?php if ($src): ?>
-            <img src="{{ $src }}" alt="{{ $alt ?? $name }}" class="rounded-[var(--avatar-radius)] size-full object-cover">
+            <img src="{{ $src }}" alt="{{ $alt ?? $name }}" class="size-full object-cover">
         <?php elseif ($icon): ?>
             <flux:icon :name="$icon" :variant="$iconVariant" :class="$iconClasses" />
         <?php elseif ($hasTextContent): ?>
-            <span class="select-none">{{ $initials ?? $slot }}</span>
+            <span class="select-none !text-white">{{ $initials ?? $slot }}</span>
         <?php endif; ?>
 
         <?php if ($badge instanceof \Illuminate\View\ComponentSlot): ?>

@@ -13,19 +13,19 @@ class InvitationFactory extends Factory
         return [
             'email' => fake()->unique()->safeEmail(),
             'token' => Str::random(64),
-            'roles' => null,
+            'role' => fake()->randomElement(['Ghost', 'Admin', 'User']),
             'registered_at' => null,
             'expires_at' => now()->addDays(7),
             'invited_by' => User::factory(),
         ];
     }
 
-    public function withRoles(array $roles): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'roles' => $roles,
-        ]);
-    }
+    //public function withRole(string $role): static
+    //{
+    //    return $this->state(fn (array $attributes) => [
+    //        'role' => $role,
+    //    ]);
+    //}
 
     public function expired(): static
     {
